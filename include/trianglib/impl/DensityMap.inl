@@ -34,7 +34,7 @@ template <typename vectorType>
 vectorType trianglib::DensityMap::sampleRandomCoordinate()
 {
 
-    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
+    std::uniform_real_distribution dis(0.0f, 1.0f);
     const float roll = dis(mGen);
 
     int low = 0;
@@ -50,6 +50,8 @@ vectorType trianglib::DensityMap::sampleRandomCoordinate()
             low = mid + 1;
         }
     }
+
+
 
     const float x = static_cast<float>(index % mDistributionWidth) / static_cast<float>(mDistributionWidth);
     const float y = static_cast<float>(index / mDistributionWidth) / static_cast<float>(mDistributionHeight);

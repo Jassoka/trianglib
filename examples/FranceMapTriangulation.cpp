@@ -31,7 +31,7 @@ int main()
         std::cerr << "Failed to open output file " << outputPath << '\n';
 
 
-    auto pointCloud = map.sampleNRandomCoordinates<vec2>(5000);
+    auto pointCloud = map.sampleNRandomCoordinates<vec2>(2000);
     auto start = std::chrono::high_resolution_clock::now();
     auto mesh = trianglib::Triangulation2D::triangulate(pointCloud);
     auto end = std::chrono::high_resolution_clock::now();
@@ -41,4 +41,5 @@ int main()
     svgFile.writeMesh(mesh);
     svgFile.close();
     return 0;
+
 }
