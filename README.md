@@ -1,9 +1,7 @@
 # Trianglib
-***
 Trianglib is a lightweight header-only library for Delaunay triangulation
 
 ## Density maps
-***
 The library can generate density of probabilities based on image files,
 either greyscale or color depending on the pixels' intensity.
 
@@ -26,7 +24,6 @@ Points can be randomly-generated with said discrete probability distribution.
 We can see the points are denser in the white areas, and less dense in the black areas
 
 ## 2D Delaunay Triangulation
-***
 A given 2D cloud of points can be triangulated using [Bowyer-Watson algorithm](https://en.wikipedia.org/wiki/Bowyer%E2%80%93Watson_algorithm):
 
 <table align="center">
@@ -41,11 +38,10 @@ A given 2D cloud of points can be triangulated using [Bowyer-Watson algorithm](h
 </table>
 
 # Usage
-***
 Any vector type works as input. \
 To implement a vector type,
 the template for the ```nth_impl.get```, ```set_nth_impl.set``` and ```get_scalar_type_impl.get```
-methods need to be defined within the ```trianglib::util::vectors``` namespace.
+methods need to be defined within th***e ```trianglib::util::vectors``` namespace.
 
 The library implements the necessary methods for ```std::array<T, N>```:
 ```cpp
@@ -88,3 +84,18 @@ int main()
 }
 ```
 
+## Credits
+
+---
+
+This project makes use of the following third-party components:
+
+* **[stb_image](https://github.com/nothings/stb)** (Sean Barrett and contributors) - Used for loading image files.
+* **[Robust Geometric Predicates](https://www.cs.cmu.edu/~quake/robust.html)** (Jonathan Richard Shewchuk) - Used for the precise orientation and incircle tests required for the triangulation algorithm.
+## License
+
+---
+
+Copyright (c) 2026 Jassoka
+
+This project is licensed under the [MIT License](LICENSE) - see the `LICENSE` file for details.
