@@ -5,10 +5,9 @@
 #ifndef DELENAUYTESSELATIONGENERATION_IMAGEFILE_H
 #define DELENAUYTESSELATIONGENERATION_IMAGEFILE_H
 #include <cstdint>
-#include <random>
 #include <string>
 
-#include "File.h"
+#include "File.hpp"
 
 namespace trianglib
 {
@@ -72,4 +71,7 @@ namespace trianglib
         ChannelType mChannelType;
     };
 }
+
+#include "impl/ImageFile.inl"
+
 #endif //DELENAUYTESSELATIONGENERATION_IMAGEFILE_H

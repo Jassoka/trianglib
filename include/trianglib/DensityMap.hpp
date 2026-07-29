@@ -5,9 +5,8 @@
 #ifndef DELENAUYTESSELATIONGENERATION_DENSITYMAP_H
 #define DELENAUYTESSELATIONGENERATION_DENSITYMAP_H
 #include <random>
-#include <Eigen/Core>
 
-#include "ImageFile.h"
+#include "ImageFile.hpp"
 
 class ImageFile;
 
@@ -20,14 +19,14 @@ namespace trianglib
     class DensityMap
     {
     public:
-        /**
-         * Generates distribution from an image file
-         */
+        /** @brief Generates distribution from an image file */
         explicit DensityMap(const ImageFile &file);
-        /**
-         * Samples a random coordinate from the current distribution
-         */
-        Eigen::Vector2f sampleRandomCoordinate();
+        /** @brief Samples a random coordinate from the current distribution */
+        template <typename vectorType>
+        vectorType sampleRandomCoordinate();
+        /** @brief Samples n random coordinates to a list of vectors */
+        template <typename vectorType>
+        std::vector<vectorType> sampleNRandomCoordinates(int n);
     private:
         void generateDistribution(const ImageFile &file);
         /** @brief Pointer to 0.0 to 1.0 values for image cumulative distribution */
@@ -38,5 +37,6 @@ namespace trianglib
     };
 }
 
+#include "impl/DensityMap.inl"
 
 #endif //DELENAUYTESSELATIONGENERATION_DENSITYMAP_H

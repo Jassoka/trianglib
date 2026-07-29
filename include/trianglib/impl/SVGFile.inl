@@ -2,8 +2,7 @@
 // Created by jassoka on 7/13/26.
 //
 
-#include "trianglib/SVGFile.h"
-#include "trianglib/Mesh.h"
+#include "trianglib/Mesh.hpp"
 
 trianglib::SVGFile::SVGFile(const std::string& path, const uint32_t width, const uint32_t height):
     mFile(path),
@@ -49,21 +48,26 @@ void trianglib::SVGFile::close()
     }
 }
 
-void trianglib::SVGFile::addPoint(const Eigen::Vector2f& point)
+template <typename vectorType2D>
+void trianglib::SVGFile::addPoint(const vectorType2D& point)
 {
-    mFile << "  <circle cx=\"" << point[0]*mWidth
-                << "\" cy=\"" << point[1]*mHeight
+    mFile << "  <circle cx=\"" << util::nth<0, vectorType2D>(point)*mWidth
+                << "\" cy=\"" << util::nth<1, vectorType2D>(point)*mHeight
                 << "\" r=\"1.0\" fill=\"#ffffff\" opacity=\"0.8\" />\n";
 }
 
-void trianglib::SVGFile::addLine(const Eigen::Vector2f& origin, const Eigen::Vector2f& end)
+template <typename vectorType2D>
+void trianglib::SVGFile::addLine(const vectorType2D& origin, const vectorType2D& end)
 {
-    mFile << "<line x1=\"" << origin.x()*mWidth << "\" y1=\"" << origin.y()*mHeight
-        << "\" x2=\"" << end.x()*mWidth << "\" y2=\"" << end.y()*mHeight
+    mFile << "<line x1=\"" << util::nth<0, vectorType2D>(origin) * mWidth
+        << "\" y1=\"" << util::nth<1, vectorType2D>(origin) * mHeight
+        << "\" x2=\"" << util::nth<0, vectorType2D>(end) * mWidth
+        << "\" y2=\"" << util::nth<1, vectorType2D>(end) * mHeight
         << "\" stroke=\"#ffffff\" stroke-width=\"1\" />\n";
 }
 
-void trianglib::SVGFile::writeMesh(const Mesh2D& mesh)
+template <typename vectorType2D>
+void trianglib::SVGFile::writeMesh(const Mesh<vectorType2D>& mesh)
 {
     const auto points = mesh.getVertices();
     for (const auto p : points)

@@ -7,9 +7,7 @@
 
 namespace trianglib
 {
-    /**
-     * Class for opening and editing files
-     */
+    /** Class for opening and editing files */
     class File
     {
     public:

@@ -4,15 +4,15 @@
 
 #ifndef DELENAUYTESSELATIONGENERATION_TRIANGULATION_H
 #define DELENAUYTESSELATIONGENERATION_TRIANGULATION_H
-#include "types.hpp"
-#include "trianglib/Mesh.h"
+#include "trianglib/Mesh.hpp"
 
 namespace trianglib
 {
     class Triangulation2D
     {
     public:
-        static void triangulate(Mesh2D &mesh);
+        template <typename vectorType2D>
+        [[nodiscard]] static Mesh<vectorType2D> triangulate(const std::vector<vectorType2D> &points);
     private:
         /**
          * @param points Reference to vector of vertices
@@ -20,11 +20,16 @@ namespace trianglib
          * If empty, all vertices are considered
          * @return Vector of triangles containing indices
          */
-        static std::vector<Triangle> triangulateImpl(const std::vector<vec2> &points,
+        template <typename vectorType2D>
+        static std::vector<Triangle> triangulateImpl(const std::vector<vectorType2D> &points,
             const std::vector<uint32_t> &pointIndices = std::vector<uint32_t>());
-        static void addTriangle(Mesh2D &mesh, Triangle t);
+
+        template <typename vectorType2D>
+        static void addTriangle(Mesh<vectorType2D> &mesh, Triangle t);
+
         /** Returns whether the vertex D is in the circumcircle for the triangle ABC */
-        static bool isInCircumcircle2D(vec2 A, vec2 B, vec2 C, vec2 D);
+        template <typename vectorType2D>
+        static bool isInCircumcircle2D(vectorType2D A, vectorType2D B, vectorType2D C, vectorType2D D);
 
         // Boucle de triangulation
         static Edge getTriangleEdge(const Triangle &t, const int edgeIdx)
@@ -35,4 +40,5 @@ namespace trianglib
     };
 }
 
+#include "impl/Triangulation.inl"
 #endif //DELENAUYTESSELATIONGENERATION_TRIANGULATION_H

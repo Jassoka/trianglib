@@ -2,8 +2,8 @@
 // Created by jassoka on 7/13/26.
 //
 
-#include "trianglib/DensityMap.h"
-#include "trianglib/ImageFile.h"
+#include "trianglib/ImageFile.hpp"
+#include "trianglib/types.hpp"
 
 trianglib::DensityMap::DensityMap(const ImageFile& file):
     mDistributionWidth(file.width()),
@@ -13,7 +13,8 @@ trianglib::DensityMap::DensityMap(const ImageFile& file):
     generateDistribution(file);
 }
 
-void trianglib::DensityMap::generateDistribution(const trianglib::ImageFile &file)
+
+void trianglib::DensityMap::generateDistribution(const ImageFile &file)
 {
     const int totalSize = mDistributionHeight*mDistributionWidth;
     mDistribution.resize(totalSize);
@@ -29,7 +30,8 @@ void trianglib::DensityMap::generateDistribution(const trianglib::ImageFile &fil
 }
 
 
-Eigen::Vector2f trianglib::DensityMap::sampleRandomCoordinate()
+template <typename vectorType>
+vectorType trianglib::DensityMap::sampleRandomCoordinate()
 {
 
     std::uniform_real_distribution<float> dis(0.0f, 1.0f);
@@ -40,8 +42,8 @@ Eigen::Vector2f trianglib::DensityMap::sampleRandomCoordinate()
     int index = high;
 
     while (low <= high) {
-        const int mid = low + (high - low) / 2;
-        if (mDistribution[mid] >= roll) {
+        if (const int mid = low + (high - low) / 2;
+            mDistribution[mid] >= roll) {
             index = mid;
             high = mid - 1;
         } else {
@@ -51,5 +53,17 @@ Eigen::Vector2f trianglib::DensityMap::sampleRandomCoordinate()
 
     const float x = static_cast<float>(index % mDistributionWidth) / static_cast<float>(mDistributionWidth);
     const float y = static_cast<float>(index / mDistributionWidth) / static_cast<float>(mDistributionHeight);
-    return Eigen::Vector2f(x, y);
+    vectorType vec;
+    util::set_nth<0, vectorType>(vec, x);
+    util::set_nth<1, vectorType>(vec, y);
+    return vec;
+}
+
+template <typename vectorType>
+std::vector<vectorType> trianglib::DensityMap::sampleNRandomCoordinates(const int n)
+{
+    auto vec = std::vector<vectorType>();
+    for (int i = 0; i < n; i++)
+        vec.push_back(sampleRandomCoordinate<vectorType>());
+    return vec;
 }

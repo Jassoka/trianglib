@@ -2,11 +2,8 @@
 // Created by jassoka on 7/13/26.
 //
 
-#include "../include/trianglib/ImageFile.h"
 #include <iostream>
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include <stb/stb_image.h>
 
 #ifdef ENABLE_DEBUG
 std::ostream& operator<<(std::ostream& os, const trianglib::Pixel p)

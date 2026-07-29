@@ -7,10 +7,8 @@
 #include <cstdint>
 #include <fstream>
 
-#include <Eigen/Core>
-
-#include "File.h"
-#include "types.hpp"
+#include "File.hpp"
+#include "Mesh.hpp"
 
 
 namespace trianglib
@@ -26,9 +24,12 @@ namespace trianglib
         void close() override;
         bool isOpen() const override;
 
-        void writeMesh(const Mesh2D& mesh);
-        void addPoint(const vec2 &point);
-        void addLine(const vec2 &origin, const vec2 &end);
+        template <typename vectorType2D>
+        void writeMesh(const Mesh<vectorType2D>& mesh);
+        template <typename vectorType2D>
+        void addPoint(const vectorType2D &point);
+        template <typename vectorType2D>
+        void addLine(const vectorType2D &origin, const vectorType2D &end);
 
     private:
         void writeHeader();
@@ -41,4 +42,5 @@ namespace trianglib
     };
 }
 
+#include "impl/SVGFile.inl"
 #endif //DELENAUYTESSELATIONGENERATION_SVGWRITER_H
