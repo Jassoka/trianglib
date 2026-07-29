@@ -86,15 +86,11 @@ int main()
 
 ## Credits
 
----
-
 This project makes use of the following third-party components:
 
 * **[stb_image](https://github.com/nothings/stb)** (Sean Barrett and contributors) - Used for loading image files.
 * **[Robust Geometric Predicates](https://www.cs.cmu.edu/~quake/robust.html)** (Jonathan Richard Shewchuk) - Used for the precise orientation and incircle tests required for the triangulation algorithm.
 ## License
-
----
 
 Copyright (c) 2026 Jassoka
 
